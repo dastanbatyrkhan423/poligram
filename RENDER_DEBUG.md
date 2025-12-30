@@ -103,3 +103,4 @@ python manage.py showmigrations
 3. Проверьте логи в Render Dashboard
 4. Убедитесь, что все переменные окружения установлены
 
+
