@@ -71,8 +71,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-    
-    # Настройки безопасности для продакшена
+
+# Настройки безопасности для продакшена
+if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
@@ -170,7 +171,7 @@ STATICFILES_DIRS = [
 ]
 
 # WhiteNoise для статических файлов
-# Используем простой вариант для надежности (работает и в DEBUG, и в production)
+# Используем простой вариант для надежности
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/media/'
