@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 # Собираем статические файлы (важно для WhiteNoise)
 echo "Starting collectstatic..."
-python manage.py collectstatic --no-input --clear --verbosity 2
+python manage.py collectstatic --noinput --clear
 
 # Проверяем, что файлы собраны
 echo "Checking static files..."

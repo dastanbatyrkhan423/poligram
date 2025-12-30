@@ -171,8 +171,7 @@ STATICFILES_DIRS = [
 ]
 
 # WhiteNoise для статических файлов
-# Используем самый простой вариант без сжатия для максимальной совместимости
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
