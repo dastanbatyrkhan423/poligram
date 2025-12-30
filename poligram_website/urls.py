@@ -35,6 +35,11 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
+# Статические файлы (только для DEBUG)
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Медиа-файлы (для DEBUG и продакшена)
+# На продакшене используйте облачное хранилище (S3, Cloudinary и т.д.)
+# Временно обслуживаем медиа-файлы через Django (не рекомендуется для продакшена)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

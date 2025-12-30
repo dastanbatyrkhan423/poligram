@@ -26,7 +26,7 @@ MANIFEST
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-/media
+# /media  # Временно не игнорируем для переноса на Render
 /staticfiles
 # НЕ игнорируем /static - эта папка должна быть в git!
 
