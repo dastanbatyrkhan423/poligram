@@ -2,12 +2,18 @@
 # exit on error
 set -o errexit
 
-# Install dependencies
+# Обновляем pip
+pip install --upgrade pip
+
+# Устанавливаем зависимости
 pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --no-input
+# Собираем статические файлы
+python manage.py collectstatic --no-input --clear
 
-# Run migrations
-python manage.py migrate
+# Применяем миграции
+python manage.py migrate --no-input
+
+# Создаем суперпользователя (опционально, можно сделать вручную через shell)
+# python manage.py createsuperuser --noinput || true
 
