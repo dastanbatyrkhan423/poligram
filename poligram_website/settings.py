@@ -175,7 +175,8 @@ STATICFILES_DIRS = [
 
 # WhiteNoise для статических файлов (только для продакшена)
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Используем простой вариант для надежности
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
