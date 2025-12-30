@@ -8,8 +8,12 @@ pip install --upgrade pip
 # Устанавливаем зависимости
 pip install -r requirements.txt
 
-# Собираем статические файлы
+# Собираем статические файлы (важно для WhiteNoise)
 python manage.py collectstatic --no-input --clear
+
+# Проверяем, что файлы собраны
+echo "Checking static files..."
+ls -la staticfiles/ || echo "Static files directory created"
 
 # Применяем миграции
 python manage.py migrate --no-input
