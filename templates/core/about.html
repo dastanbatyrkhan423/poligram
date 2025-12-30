@@ -1,0 +1,511 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О компании - {{ company.name|default:"ТОО Poligram" }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .about-hero-section {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 8rem 0 5rem;
+        margin-top: 80px;
+        position: relative;
+        overflow: visible;
+    }
+    
+    .about-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+        background-size: 200% 100%;
+        animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .about-hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100%;
+    }
+    
+    .about-hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        margin-top: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        line-height: 1.4;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        padding: 0;
+    }
+    
+    .about-hero-subtitle {
+        font-size: 1.3rem;
+        color: #ffffff;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        font-weight: 400;
+    }
+    
+    /* About Content */
+    .about-content-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+    
+    /* Company Info Section */
+    .company-info-section {
+        margin-bottom: 5rem;
+    }
+    
+    .company-info-content {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 4rem;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .company-name {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 1.5rem;
+    }
+    
+    .company-name::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        border-radius: 2px;
+    }
+    
+    .company-description {
+        font-size: 1.25rem;
+        line-height: 2;
+        color: #1e293b;
+        margin-bottom: 2rem;
+        font-weight: 400;
+    }
+    
+    .company-description p {
+        margin-bottom: 1.8rem;
+    }
+    
+    .company-description ul {
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        line-height: 2;
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .company-description ul li {
+        position: relative;
+        padding-left: 1.8rem;
+        margin-bottom: 1rem;
+        color: #1e293b;
+        font-size: 1.2rem;
+    }
+    
+    .company-description ul li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: #3b82f6;
+        font-weight: bold;
+        font-size: 1.4rem;
+    }
+    
+    .company-description strong {
+        color: #1e3a8a;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+    
+    /* Mission, Vision, Values */
+    .company-values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .value-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .value-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+    
+    .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+    }
+    
+    .value-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .value-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        color: white;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    .value-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .value-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 1rem;
+    }
+    
+    .value-content {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #4a5568;
+    }
+    
+    .value-content p {
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Key Figures Section */
+    .key-figures-section {
+        margin-bottom: 5rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        border-radius: 2px;
+    }
+    
+    .key-figures-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    
+    .key-figure-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 2.5rem;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+    
+    .key-figure-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+    }
+    
+    .key-figure-value {
+        font-size: 3.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        line-height: 1;
+    }
+    
+    .key-figure-description {
+        font-size: 1.1rem;
+        color: #4a5568;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+    
+    /* Certificates and Licenses Section */
+    .certificates-licenses-section {
+        margin-bottom: 5rem;
+    }
+    
+    .certificates-licenses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+    
+    .cert-license-card {
+        background: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .cert-license-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+    }
+    
+    .cert-license-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .cert-license-content {
+        padding: 1.5rem;
+    }
+    
+    .cert-license-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cert-license-number {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #64748b;
+        font-size: 1.2rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .company-values-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .key-figures-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        
+        .about-hero-title {
+            font-size: 2.8rem;
+        }
+        
+        .about-hero-subtitle {
+            font-size: 1.1rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .about-hero-section {
+            padding: 5rem 0 3rem;
+            margin-top: 80px;
+        }
+        
+        .about-hero-title {
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+        
+        .about-hero-subtitle {
+            font-size: 1rem;
+        }
+        
+        .about-content-wrapper {
+            padding: 3rem 1.5rem;
+        }
+        
+        .company-info-content {
+            padding: 2.5rem 1.5rem;
+        }
+        
+        .company-name {
+            font-size: 2.2rem;
+        }
+        
+        .company-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .company-description ul li {
+            font-size: 1.1rem;
+        }
+        
+        .company-description strong {
+            font-size: 1.2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .key-figures-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .certificates-licenses-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .value-card {
+            padding: 2rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .about-hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .company-info-content {
+            padding: 1.5rem 1rem;
+        }
+        
+        .key-figure-value {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="about-hero-section">
+    <div class="about-hero-content">
+        <h1 class="about-hero-title">О компании</h1>
+        <p class="about-hero-subtitle">Узнайте больше о нашей компании, ценностях и достижениях</p>
+    </div>
+</section>
+
+<!-- About Content -->
+<div class="about-content-wrapper">
+    <!-- Company Info Section -->
+    <section class="company-info-section">
+        <div class="company-info-content">
+            <h2 class="company-name">ТОО «Poligram»</h2>
+            <div class="company-description">
+                <p>ТОО «Poligram» было основано в 2006 году для предоставления широкого спектра услуг по проведению строительно-монтажных работ, многодисциплинарному проектированию и инжинирингу для гражданского и промышленного строительства с основным направлением деятельности в нефтегазовом сегменте.</p>
+                
+                <p><strong>Имеет такие лицензии как:</strong></p>
+                <ul>
+                    <li>1 категория на строительно-монтажные работы</li>
+                    <li>1 категория на проектирование</li>
+                    <li>Проведение изыскательской деятельности</li>
+                    <li>Охрана окружающей среды</li>
+                    <li>Лицензия на горнодобывающую и нефтедобывающую отрасль</li>
+                </ul>
+                
+                <p><strong>ТОО «Poligram» предоставляет следующий спектр работ по проектированию:</strong></p>
+                <ul>
+                    <li>Гражданское и промышленное строительство</li>
+                    <li>Строительство инженерных сетей</li>
+                    <li>Строительство автомобильных и железных дорог</li>
+                    <li>Строительство линейных сооружений</li>
+                    <li>Строительство гидротехнических и гидромелиоративных сооружений</li>
+                    <li>Лицензия на горнодобывающую и нефтедобывающую отрасль</li>
+                    <li>Проектирование и эксплуатация горных производств, нефтехимических, эксплуатация магистральных газопроводов, нефтепроводов, нефтепродуктопроводов в сфере углеводородов</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Figures Section -->
+    {% if key_figures %}
+    <section class="key-figures-section">
+        <h2 class="section-title">Ключевые показатели</h2>
+        <div class="key-figures-grid">
+            {% for figure in key_figures %}
+            <div class="key-figure-card">
+                <div class="key-figure-value">{{ figure.value }}</div>
+                <div class="key-figure-description">{{ figure.description }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+
+{% endblock %}

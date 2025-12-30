@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Портфолио - ТОО Poligram{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>Портфолио проектов</h1>
+    
+    {% if projects %}
+    <div>
+        {% for project in projects %}
+        <div>
+            {% if project.main_image %}
+            <img src="{{ project.main_image.url }}" alt="{{ project.title }}">
+            {% endif %}
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.short_description }}</p>
+            <p>Год: {{ project.year }}</p>
+            <p>Местоположение: {{ project.location }}</p>
+            <p>Статус: {{ project.get_status_display }}</p>
+            <a href="{{ project.get_absolute_url }}">Подробнее</a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Пагинация -->
+    {% if is_paginated %}
+    <div>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+        
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <p>Проекты не найдены.</p>
+    {% endif %}
+</section>
+
+{% endblock %}

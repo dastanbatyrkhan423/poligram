@@ -1,0 +1,755 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Услуги - ТОО Poligram{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .services-hero-section {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+        padding: 8rem 0 6rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .services-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+        background-size: 200% 100%;
+        animation: gradientShift 3s ease infinite;
+        z-index: 2;
+    }
+    
+    .services-hero-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.3) 0%, transparent 50%);
+        z-index: 1;
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .services-hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .services-hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        line-height: 1.1;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        position: relative;
+        z-index: 10;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .services-hero-subtitle {
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.95);
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.7;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 10;
+        font-weight: 300;
+        animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Category Filter */
+    .category-filter-section {
+        background: rgba(248, 250, 252, 0.98);
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #e2e8f0;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .category-filter-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    
+    .category-filter-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .category-filter-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .category-filter-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        border: 2px solid #e2e8f0;
+        background: #ffffff;
+        color: #64748b;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        font-family: inherit;
+    }
+    
+    .category-filter-btn:hover,
+    .category-filter-btn.active {
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        color: #ffffff;
+        border-color: #3b82f6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Services Content */
+    .services-content-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+    
+    .category-section {
+        margin-bottom: 3rem;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .category-section.hidden {
+        display: none;
+    }
+    
+    .category-section:last-child {
+        margin-bottom: 0;
+    }
+    
+    .category-header {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    .category-header::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        border-radius: 2px;
+    }
+    
+    .category-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .category-description {
+        font-size: 0.95rem;
+        color: #64748b;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.25rem;
+        margin-top: 2rem;
+    }
+    
+    @media (min-width: 1200px) {
+        .services-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    
+    @media (min-width: 1600px) {
+        .services-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+    
+    @media (min-width: 2000px) {
+        .services-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+    
+    /* Service Card */
+    .service-card {
+        background: #ffffff;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 100%;
+    }
+    
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+        z-index: 1;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 70px rgba(59, 130, 246, 0.25);
+        border-color: #3b82f6;
+    }
+    
+    .service-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .service-card-image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .service-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .service-card:hover .service-card-image {
+        transform: scale(1.15);
+    }
+    
+    .service-card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 0%, rgba(30, 58, 138, 0.85) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .service-card:hover .service-card-overlay {
+        opacity: 1;
+    }
+    
+    .service-card-overlay-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(15px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transform: scale(0.7) rotate(-10deg);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .service-card:hover .service-card-overlay-icon {
+        transform: scale(1) rotate(0deg);
+    }
+    
+    .service-card-overlay-icon svg {
+        width: 36px;
+        height: 36px;
+        stroke-width: 2.5;
+    }
+    
+    .service-card-content {
+        padding: 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .service-card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.6rem;
+        line-height: 1.3;
+        transition: color 0.3s ease;
+    }
+    
+    .service-card:hover .service-card-title {
+        color: #3b82f6;
+    }
+    
+    .service-card-description {
+        font-size: 0.85rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    
+    .service-card-footer {
+        margin-top: auto;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e2e8f0;
+    }
+    
+    .service-read-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        color: white;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 12px rgba(59, 130, 246, 0.25);
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .service-read-more-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+        background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    }
+    
+    .service-read-more-btn svg {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .service-read-more-btn:hover svg {
+        transform: translateX(5px);
+    }
+    
+    /* Empty State */
+    .services-empty {
+        text-align: center;
+        padding: 6rem 2rem;
+        color: #64748b;
+        font-size: 1.3rem;
+    }
+    
+    /* Responsive */
+    @media (min-width: 1200px) and (max-width: 1399px) {
+        .services-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .services-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        
+        .services-hero-title {
+            font-size: 3rem;
+        }
+        
+        .services-hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .category-title {
+            font-size: 2.2rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .services-hero-section {
+            padding: 5rem 0 4rem;
+        }
+        
+        .services-hero-title {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .services-hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .category-filter-section {
+            top: 80px;
+            padding: 1.25rem 0;
+        }
+        
+        .category-filter-buttons {
+            gap: 0.75rem;
+        }
+        
+        .category-filter-btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+        
+        .services-content-wrapper {
+            padding: 3rem 1.5rem;
+        }
+        
+        .category-section {
+            margin-bottom: 4rem;
+        }
+        
+        .category-title {
+            font-size: 2rem;
+        }
+        
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .service-card-image-wrapper {
+            height: 150px;
+        }
+        
+        .service-card-content {
+            padding: 1.25rem;
+        }
+        
+        .service-card-title {
+            font-size: 1.15rem;
+        }
+        
+        .service-card-description {
+            font-size: 0.85rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .services-hero-section {
+            padding: 4rem 0 3rem;
+        }
+        
+        .services-hero-title {
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        
+        .services-hero-subtitle {
+            font-size: 1rem;
+        }
+        
+        .category-filter-wrapper {
+            padding: 0 1rem;
+        }
+        
+        .category-filter-buttons {
+            gap: 0.5rem;
+        }
+        
+        .category-filter-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .services-content-wrapper {
+            padding: 2rem 1rem;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+        }
+        
+        .services-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .service-card-image-wrapper {
+            height: 140px;
+        }
+        
+        .service-card-content {
+            padding: 1.25rem;
+        }
+        
+        .service-card-title {
+            font-size: 1.1rem;
+        }
+        
+        .service-card-description {
+            font-size: 0.85rem;
+        }
+        
+        .service-read-more-btn {
+            padding: 0.65rem 1.15rem;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="services-hero-section">
+    <div class="services-hero-content">
+        <h1 class="services-hero-title">Наши услуги</h1>
+        <p class="services-hero-subtitle">Комплексные решения для строительства и проектирования в Казахстане</p>
+    </div>
+</section>
+
+<!-- Category Filter -->
+<section class="category-filter-section">
+    <div class="category-filter-wrapper">
+        <div class="category-filter-title">Фильтр по категориям:</div>
+        <div class="category-filter-buttons">
+            <button type="button" class="category-filter-btn active" data-category="all">Все услуги</button>
+            {% for category in categories %}
+            <button type="button" class="category-filter-btn" data-category="{{ category.slug }}">{{ category.name }}</button>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Services Content -->
+<div class="services-content-wrapper">
+    {% if categories %}
+        {% for category in categories %}
+            {% with category_services=category.services.all|dictsort:"order" %}
+                {% if category_services %}
+                <div class="category-section" data-category="{{ category.slug }}">
+                    <div class="category-header">
+                        <h2 class="category-title">{{ category.name }}</h2>
+                        {% if category.description %}
+                        <p class="category-description">{{ category.description|safe|truncatewords:25 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="services-grid">
+                        {% for service in category_services %}
+                        <div class="service-card" id="{{ service.slug }}">
+                            {% if service.main_image %}
+                            <div class="service-card-image-wrapper">
+                                <img src="{{ service.main_image.url }}" alt="{{ service.name }}" class="service-card-image">
+                                <div class="service-card-overlay">
+                                    <div class="service-card-overlay-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="service-card-image-wrapper">
+                                <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #e0e7ff 0%, #c3dafe 100%);">
+                                    <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <path d="M9 9h6v6H9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="service-card-content">
+                                <h2 class="service-card-title">{{ service.name }}</h2>
+                                <p class="service-card-description">{{ service.short_description }}</p>
+                                
+                                <div class="service-card-footer">
+                                    <a href="{% url 'services:service_detail' service.slug %}" class="service-read-more-btn">
+                                        Подробнее
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% elif services %}
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card" id="{{ service.slug }}">
+                {% if service.main_image %}
+                <div class="service-card-image-wrapper">
+                    <img src="{{ service.main_image.url }}" alt="{{ service.name }}" class="service-card-image">
+                    <div class="service-card-overlay">
+                        <div class="service-card-overlay-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="service-card-image-wrapper">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #e0e7ff 0%, #c3dafe 100%);">
+                        <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M9 9h6v6H9z"/>
+                        </svg>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="service-card-content">
+                    <h2 class="service-card-title">{{ service.name }}</h2>
+                    <p class="service-card-description">{{ service.short_description }}</p>
+                    
+                    <div class="service-card-footer">
+                        <a href="{% url 'services:service_detail' service.slug %}" class="service-read-more-btn">
+                            Подробнее
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="services-empty">
+            <p>Услуги не найдены.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.category-filter-btn');
+    const categorySections = document.querySelectorAll('.category-section');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedCategory = this.getAttribute('data-category');
+            
+            // Убираем активный класс со всех кнопок
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Добавляем активный класс к нажатой кнопке
+            this.classList.add('active');
+            
+            // Показываем/скрываем категории
+            categorySections.forEach(section => {
+                const sectionCategory = section.getAttribute('data-category');
+                
+                if (selectedCategory === 'all') {
+                    // Показываем все категории
+                    section.style.display = 'block';
+                    setTimeout(() => {
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    // Показываем только выбранную категорию
+                    if (sectionCategory === selectedCategory) {
+                        section.style.display = 'block';
+                        setTimeout(() => {
+                            section.style.opacity = '1';
+                            section.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        section.style.opacity = '0';
+                        section.style.transform = 'translateY(-10px)';
+                        setTimeout(() => {
+                            section.style.display = 'none';
+                        }, 300);
+                    }
+                }
+            });
+            
+            // Плавная прокрутка к первой видимой категории
+            setTimeout(() => {
+                const firstVisible = document.querySelector('.category-section[style*="display: block"]');
+                if (firstVisible) {
+                    firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        });
+    });
+});
+</script>
+
+{% endblock %}
+

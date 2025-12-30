@@ -1,0 +1,121 @@
+{% extends 'base_clean.html' %}
+{% load static %}
+
+{% block title %}ТОО "Poligram" - Строительно-проектная компания{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="section">
+    <div class="container text-center">
+        <h1>ТОО «ПОЛИГРАМ»</h1>
+        <p>Строительно-проектная компания с 19-летним опытом работы</p>
+        <a href="{% url 'contact:contact' %}">Связаться с нами</a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="section">
+    <div class="container">
+        <h2>О компании</h2>
+        <p>Компания на рынке 19 лет. ТОО «ПОЛИГРАМ» выполняет полный комплекс строительно-монтажных, отделочных и инженерных работ 1 категории</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section">
+    <div class="container">
+        <h2>Наши услуги</h2>
+        <div class="grid grid-2">
+            <div>
+                <h3>Строительство</h3>
+                <ul>
+                    <li>Монтажно-строительные работы 1-ой категории</li>
+                    <li>Промышленное строительство</li>
+                    <li>Инженерные сооружения</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Дорожное строительство</h3>
+                <ul>
+                    <li>Автомобильные дороги</li>
+                    <li>Железные дороги</li>
+                    <li>Аэродромные покрытия</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Инженерные сети</h3>
+                <ul>
+                    <li>Водоснабжение</li>
+                    <li>Канализация</li>
+                    <li>Электромонтаж</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Поставка материалов</h3>
+                <ul>
+                    <li>Строительные материалы</li>
+                    <li>Металлоконструкции</li>
+                    <li>Бетонные изделия</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Figures Section -->
+<section class="section">
+    <div class="container">
+        <h2>Ключевые показатели</h2>
+        <div class="grid grid-4">
+            <div class="text-center">
+                <h3>350+</h3>
+                <p>Успешно реализованных проектов</p>
+            </div>
+            <div class="text-center">
+                <h3>19</h3>
+                <p>Лет опыта на рынке</p>
+            </div>
+            <div class="text-center">
+                <h3>1</h3>
+                <p>Высшая категория лицензии</p>
+            </div>
+            <div class="text-center">
+                <h3>4</h3>
+                <p>Международные стандарты ISO</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="section">
+    <div class="container">
+        <h2>Наши проекты</h2>
+        <div class="grid grid-3">
+            <div>
+                <h3>Промышленный комплекс</h3>
+                <p>Строительство производственного комплекса</p>
+            </div>
+            <div>
+                <h3>Дорожная инфраструктура</h3>
+                <p>Реконструкция автомобильной дороги</p>
+            </div>
+            <div>
+                <h3>Инженерные сети</h3>
+                <p>Прокладка коммуникаций</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section">
+    <div class="container text-center">
+        <h2>Свяжитесь с нами</h2>
+        <p>Готовы обсудить ваш проект? Свяжитесь с нами для получения консультации</p>
+        <a href="{% url 'contact:contact' %}">Связаться с нами</a>
+    </div>
+</section>
+
+{% endblock %}

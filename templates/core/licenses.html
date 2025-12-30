@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Лицензии - ТОО Poligram{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>Лицензии</h1>
+    
+    {% if licenses %}
+    <div>
+        {% for license in licenses %}
+        <div>
+            {% if license.image %}
+            <img src="{{ license.image.url }}" alt="{{ license.title }}">
+            {% endif %}
+            <h3>{{ license.title }}</h3>
+            <p>Номер: {{ license.number }}</p>
+            <p>Категория: {{ license.category }}</p>
+            <p>Выдана: {{ license.issue_date }}</p>
+            <p>Орган: {{ license.issuer }}</p>
+            {% if license.expiry_date %}
+            <p>Действует до: {{ license.expiry_date }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Пагинация -->
+    {% if is_paginated %}
+    <div>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+        
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <p>Лицензии не найдены.</p>
+    {% endif %}
+</section>
+
+{% endblock %}
