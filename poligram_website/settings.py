@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-rqlc#w4zo9s7iwsj16^h%
 # SECURITY WARNING: don't run with debug turned on in production!
 # На Render установи DEBUG=False через переменные окружения
 # Для отладки на Render временно установи DEBUG=True в Environment Variables
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS для продакшена
 ALLOWED_HOSTS = config(
