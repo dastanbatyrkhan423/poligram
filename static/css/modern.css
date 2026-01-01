@@ -2096,7 +2096,8 @@ main {
     
     .who-we-are-visuals {
         order: 1;
-        height: 300px;
+        height: auto;
+        min-height: 200px;
     }
     
     .who-we-are-text {
@@ -2121,21 +2122,35 @@ main {
     }
     
     .project-mockup-visual {
-        position: relative;
+        position: relative !important;
         transform: rotate(0deg) !important;
         width: 100% !important;
+        height: 180px !important;
+        min-height: 180px !important;
         margin-bottom: 1rem;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+    }
+    
+    .mockup-image-visual {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
     }
     
     .mockup-1,
     .mockup-2,
     .mockup-3,
     .mockup-4 {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        height: 180px !important;
     }
     
     .center-icon-wrapper {
