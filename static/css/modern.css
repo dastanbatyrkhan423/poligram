@@ -1966,18 +1966,28 @@ main {
 
 @media (max-width: 768px) {
     .video-hero-section {
-        height: 60vh;
+        height: 45vh;
         margin-top: 70px;
+    }
+    
+    .video-overlay {
+        background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    
+    .hero-content {
+        padding: 1.5rem 1rem;
     }
     
     .hero-title {
         font-size: 1.8rem;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
     }
     
     .hero-subtitle {
         font-size: 0.9rem !important;
         color: #ffffff !important;
         opacity: 1 !important;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
     
     .hero-btn {
